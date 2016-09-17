@@ -1,0 +1,27 @@
+.comments{
+    margin:auto;
+    width:800px;
+    border:2px #eee solid;
+}
+
+.comment{
+    padding:10px;
+    max-height:500px;
+    min-height:100px;
+    border:2px #eee solid;
+}
+
+.comment-header{
+    height:30px;
+}
+
+.btn-vote{
+    height:25px;
+    width:25px;
+    margin-left:20px;
+}
+
+.rating{
+    padding-left:25px;
+    float:left;
+}
