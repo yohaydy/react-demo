@@ -40,20 +40,12 @@ var CommentBox = React.createClass({
 		});
   	},	
 
-	handleCommentUpdate: function(comment) {
-		//TODO: post data to api
-		this.setState({data: data})
-	},
-
-	handleCommentVote: function(id, val){
-		console.log("Hi there " + val + " " + id);
-	},
 
 	render: function() {
 		return(
 			<div className="comment-box">
 				<h1>Comments</h1>
-				<CommentList data={this.state.data} handleCommentVote={this.handleCommentVote}/>
+				<CommentList data={this.state.data}/>
 				<CommentForm onCommentSubmit={this.handleCommentSubmit}/>
 			</div>
 			
@@ -74,7 +66,6 @@ var CommentList = React.createClass({
 			key={com.id} 
 			rating ={com.rating} 
 			text={com.text}
-			handleCommentVote={this.props.handleCommentVote}
 			id={com.id}
 			/>
 		))
@@ -88,16 +79,12 @@ var CommentList = React.createClass({
 
 var Comment = React.createClass({
 
-	handleCommentVote: function(voteValue){
-		this.props.handleCommentVote(this.props.id, voteValue)
-	},
-
 	render: function(){
 		return (
 			<div className="comment">
 					<div className="comment-header">
 					  <div className="author">{this.props.author}</div>
-						<CommentVoter initialRating={this.props.rating} handleCommentVote={this.handleCommentVote}/>
+						<CommentVoter initialRating={this.props.rating}/>
 					</div>
 					<div className="comment-text">{this.props.text} </div>
 				</div>
@@ -116,11 +103,10 @@ var CommentVoter = React.createClass({
 	},
 	
 	voteUp: function(){
-		console.log(this.props)
-		this.props.handleCommentVote(1);
+		this.setState({rating: this.state.rating +1})
 	},
 	voteDown: function(){
-		this.props.handleCommentVote(-1);
+		this.setState({rating: this.state.rating -1})
 	},
 	
 	render: function(){
@@ -148,14 +134,14 @@ var CommentForm = React.createClass({
 	},  
 
 	handleSubmit: function(e) {
-    e.preventDefault();
-    var author = this.state.author.trim();
-    var text = this.state.text.trim();
-    if (!text || !author) {
-      return;
-    }
-    this.props.onCommentSubmit({author: author, text: text});
-    this.setState({author: '', text: ''});
+		e.preventDefault();
+		var author = this.state.author.trim();
+		var text = this.state.text.trim();
+		if (!text || !author) {
+			return;
+		}
+		this.props.onCommentSubmit({author: author, text: text});
+		this.setState({author: '', text: ''});
 	},
 
 	render: function() {
